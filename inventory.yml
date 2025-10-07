@@ -1,6 +1,6 @@
 all:
   vars:
-    ansible_python_interpreter: /usr/bin/python3
+    ansible_python_interpreter: "/usr/bin/python3"
   children:
     vms:
       hosts:
@@ -15,3 +15,9 @@ all:
         prox-server:
         pi:
           ansible_connection: local
+          arch: arm
+    terminal_users:
+      hosts:
+        pi:
+      children:
+        vms:

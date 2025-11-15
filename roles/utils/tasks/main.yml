@@ -1,0 +1,5 @@
+- name: install utils
+  package:
+    name: 
+      - ripgrep
+      - unzip

@@ -1,62 +1,16 @@
 ---
 - hosts: all
   become: true
-  tasks:
-
-    - name: apt upgrade
-      apt:
-        upgrade: "yes"
-        update_cache: "yes"
-        cache_valid_time: 3600
-      when: ansible_distribution in ["Debian", "Ubuntu"]
-
-    - name: install ripgrep
-      package:
-        name: 
-          - ripgrep
-          - unzip
+  roles:
+    - update
+    - utils
 
 - hosts: terminal_users
-  become: yes
-  tasks:
-
-    - name: install nvim x86
-      unarchive:
-        src: "https://github.com/neovim/neovim/releases/download/v0.11.4/nvim-linux-x86_64.tar.gz"
-        dest: "/opt"
-        remote_src: yes
-        mode: "755"
-        owner: root
-        group: root
-      when: arch is not defined or arch != "arm"
-    
-    - name: install nvim arm
-      unarchive:
-        src: "https://github.com/neovim/neovim/releases/download/v0.11.4/nvim-linux-arm64.tar.gz"
-        dest: "/opt"
-        remote_src: yes
-        mode: "755"
-        owner: root
-        group: root
-      when: arch is defined and arch == "arm"
-
-    - name: symlink nvim
-      file:
-        src: >-
-            {{
-              "/opt/nvim-linux-arm64/bin/nvim" 
-                if arch is defined and arch == "arm" else
-              "/opt/nvim-linux-x86_64/bin/nvim"
-            }}
-        dest: "/usr/local/bin/nvim"
-        state: link
+  become: true
+  roles:
+    - nvim
 
 - hosts: media-box
   become: true
-  tasks:
-
-    - name: start docker
-      service:
-        name: docker
-        state: started
-        enabled: yes
+  roles:
+    - docker

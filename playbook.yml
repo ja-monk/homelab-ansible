@@ -50,3 +50,13 @@
             }}
         dest: "/usr/local/bin/nvim"
         state: link
+
+- hosts: media-box
+  become: true
+  tasks:
+
+    - name: start docker
+      service:
+        name: docker
+        state: started
+        enabled: yes

@@ -2,20 +2,24 @@ all:
   vars:
     ansible_python_interpreter: "/usr/bin/python3"
   children:
+
     vms:
       hosts:
         media-box:
         dev1:
         dev2:
+
     containers:         # lxc containers
       hosts:
         jellyfin-lxc:
+
     physical:
       hosts:
         prox-server:
         pi:
           ansible_connection: local
           arch: arm
+ 
     terminal_users:
       hosts:
         pi:

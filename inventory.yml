@@ -3,19 +3,22 @@ all:
     ansible_python_interpreter: "/usr/bin/python3"
   children:
 
-    vms:
-      hosts:
-        media-box:
-          prox_id: 102
-        dev1:
-          prox_id: 103
-        dev2:
-          prox_id: 104
+    prox:
+      children:
 
-    containers:         # lxc containers
-      hosts:
-        jellyfin-lxc:
-          prox_id: 108
+        vms:
+          hosts:
+            media-box:
+              prox_id: "102"
+            dev1:
+              prox_id: "103"
+            dev2:
+              prox_id: "104"
+
+        containers:         # lxc containers
+          hosts:
+            jellyfin-lxc:
+              prox_id: "108"
 
     physical:
       hosts:

@@ -1,14 +1,20 @@
 ---
-- hosts: all
-  become: true
+- hosts: prox
+  gather_facts: false   # some hosts might not be started until after this
   roles:
-    - update
-    - utils
+    - role: start_prox
+      name: "Start VMs & CTs on Proxmox"
 
-- hosts: terminal_users
-  become: true
-  roles:
-    - nvim
+# - hosts: all
+#   become: true
+#   roles:
+#     - update
+#     - utils
+#
+# - hosts: terminal_users
+#   become: true
+#   roles:
+#     - nvim
 
 - hosts: media-box
   become: true

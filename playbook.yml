@@ -1,9 +1,20 @@
 ---
+- hosts: prox-server
+  gather_facts: false
+  roles:
+    - role: start_prox_server
+      name: "Check proxmox host is on"
+
 - hosts: prox
   gather_facts: false   # some hosts might not be started until after this
   roles:
     - role: start_prox
       name: "Start VMs & CTs on Proxmox"
+
+# TODO:
+      # backup
+      # update
+      # setup, installs, etc.
 
 # - hosts: all
 #   become: true
@@ -15,8 +26,8 @@
 #   become: true
 #   roles:
 #     - nvim
-
-- hosts: media-box
-  become: true
-  roles:
-    - docker
+#
+# - hosts: media-box
+#   become: true
+#   roles:
+#     - docker

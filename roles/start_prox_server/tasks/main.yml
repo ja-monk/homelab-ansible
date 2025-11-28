@@ -1,0 +1,21 @@
+- name: Check if prox server is on
+  ansible.builtin.ping:
+  register: ping_result
+  ignore_unreachable: true
+
+- name: Wake prox server via WOL if off
+  community.general.wakeonlan:
+    mac: "{{ mac_addr }}"
+    broadcast: "{{ broadcast }}"
+  delegate_to: localhost
+  when: ping_result.ping is not defined
+
+- name: Check host turns on
+  wait_for_connection:
+    timeout: 300
+  when: ping_result.ping is not defined
+
+- name: Wait 5 mins for VMs & CTs to start
+  pause:
+    minutes: 5
+  when: ping_result.ping is not defined

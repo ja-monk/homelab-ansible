@@ -6,8 +6,8 @@
     vmid: "{{ prox_id }}"
     state: started
   when: "'containers' in group_names"
-  delegate_to: localhost    # required libraries are on local machine, use them from here
-  register: start_result    # store results so we can check if this task changed anything
+  delegate_to: localhost         # required libraries are on local machine, use them from here
+  register: start_result         # store results so we can check if this task changed anything
 
 - name: Make sure VMs are on
   community.proxmox.proxmox_kvm:
@@ -17,10 +17,10 @@
     vmid: "{{ prox_id }}"
     state: started
   when: "'vms' in group_names"
-  delegate_to: localhost    # required libraries are on local machine, use them from here
-  register: start_result    # store results so we can check if this task changed anything
+  delegate_to: localhost         # required libraries are on local machine, use them from here
+  register: start_result         # store results so we can check if this task changed anything
 
 - name: Wait for SSH if newly started
   wait_for_connection:
-    timeout: 60
-  when: start_result.changed    # if we started the host, wait to check we can ping it
+    timeout: 120
+  when: start_result.changed     # if we started the host, wait to check we can ping it

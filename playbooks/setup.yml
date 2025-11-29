@@ -1,0 +1,22 @@
+- hosts: all
+  become: true
+  roles:
+    - role: update
+      name: "Install updates"
+    - role: utils
+      name: "Install utility programs"
+
+- hosts: terminal_users
+  become: true
+  roles:
+    - role: nvim
+      name: "Install nvim"
+    - role: node
+      name: "Install node"  # required for nvim LSPs
+      when: ansible_distribution in ["Debian", "Ubuntu"]
+
+
+# - hosts: media-box
+#   become: true
+#   roles:
+#     - docker

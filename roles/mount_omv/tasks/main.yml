@@ -1,0 +1,21 @@
+- name: Ensure mount location exists
+  file:
+    path: /mnt/omv-share
+    state: directory
+    mode: "0755"
+
+- name: Copy OMV credentials file
+  copy:
+    src: files/.omv_share_credentials
+    dest: /root/.omv_share_credentials
+    owner: root
+    group: root
+    mode: "0600"
+
+- name:
+  mount:
+    path: /mnt/omv-share
+    src: "//192.168.1.250/omv-share"
+    fstype: cifs
+    opts: "vers=3.0,credentials=/root/.omv_share_credentials,nofail,x-systemd.automount,_netdev,gid=1000,uid=1000"
+    state: mounted

@@ -6,6 +6,7 @@
     mode: "755"
     owner: root
     group: root
+    creates: "/opt/nvim-linux-x86_64/bin/nvim"
   when: arch is not defined or arch != "arm"
 
 - name: install nvim arm
@@ -16,6 +17,7 @@
     mode: "755"
     owner: root
     group: root
+    creates: "/opt/nvim-linux-arm64/bin/nvim"
   when: arch is defined and arch == "arm"
 
 - name: symlink nvim

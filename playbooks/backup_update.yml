@@ -11,6 +11,12 @@
     - role: start_prox
       name: "Start VMs & CTs on Proxmox"
 
+- hosts: "prox,pi"
+  become: true
+  roles:
+    - role: mount_omv
+      name: "Mount OMV NAS"
+
 # TODO:
       # backup
       # update

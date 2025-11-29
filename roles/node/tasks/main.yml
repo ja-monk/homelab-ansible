@@ -1,0 +1,39 @@
+# use NodeSource to get newer version than apt
+- name: Check current node version
+  ansible.builtin.command: node -v
+  register: node_version
+  ignore_errors: true
+
+- name: Install node if missing or old version
+  block:
+    - name: Ensure old node version is removed
+      package:
+        name:
+          - nodejs
+          - npm
+          - libnode-dev
+        state: absent
+
+    - name: Autoremove unneeded packages
+      ansible.builtin.apt:
+        autoremove: yes
+        autoclean: yes
+
+    - name: Download NodeSource setup script
+      ansible.builtin.get_url:
+        url: https://deb.nodesource.com/setup_24.x
+        dest: /tmp/node_setup.sh
+        mode: '0755'
+
+    - name: Run NodeSource script
+      ansible.builtin.shell: /tmp/node_setup.sh
+
+    - name: Install Node
+      ansible.builtin.package:
+        name: nodejs
+
+    - name: Cleanup
+      ansible.builtin.file:
+        path: /tmp/node_setup.sh
+        state: absent
+  when: node_version.rc != 0 or (node_version.stdout[1:] is version(24, '<'))

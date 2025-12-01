@@ -1,0 +1,16 @@
+- name: Check backup dir exists
+  file:
+    path: "/mnt/omv-share/backup/{{ ansible_hostname }}"
+    state: directory
+
+- name: Deploy exclude file
+  template:
+    src: exclude_backup.txt.j2
+    dest: /tmp/exclude_backup.txt
+
+- name: Backup files
+  vars:
+    backup_path: "/mnt/omv-share/backup/{{ ansible_hostname }}/{{ ansible_hostname }}_bkp_{{ ansible_date_time.date | regex_replace('-', '') }}.tar.gz"
+  shell: > 
+    tar --exclude-from=/tmp/exclude_backup.txt -czf
+    {{ backup_path }} {{ backup_dirs | join(' ') }}

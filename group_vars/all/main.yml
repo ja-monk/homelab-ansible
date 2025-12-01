@@ -1,1 +1,14 @@
 broadcast: "192.168.1.255"
+
+exclude_backup:
+  - /home/james/.vscode-server
+  - /home/james/docker/pi-hole/etc
+  - /home/james/logs
+  - "*.log"
+
+backup_dirs:
+  - /root
+  - /home
+  - /etc
+  - /opt
+  - /boot

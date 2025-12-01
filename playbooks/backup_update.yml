@@ -3,19 +3,18 @@
   gather_facts: false
   roles:
     - role: start_prox_server
-      name: "Check proxmox host is on"
 
 - hosts: prox
   gather_facts: false   # some hosts might not be started until after this
   roles:
     - role: start_prox
-      name: "Start VMs & CTs on Proxmox"
 
 - hosts: "prox,pi"
   become: true
   roles:
     - role: mount_omv
-      name: "Mount OMV NAS"
+    - role: backup
+
 
 # TODO:
       # backup

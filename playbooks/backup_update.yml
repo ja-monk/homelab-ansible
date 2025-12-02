@@ -15,6 +15,15 @@
     - role: mount_omv
     - role: backup
 
+- hosts: all
+  become: true
+  roles:
+    - update
+
+- hosts: prox-server    # reboot prox host, proxmox handles restarting VMs/CTs
+  become: true
+  roles:
+    - reboot
 
 # TODO:
       # backup

@@ -5,6 +5,13 @@ exclude_backup:
   - /home/james/docker/pi-hole/etc
   - /home/james/logs
   - "*.log"
+  - /home/james/docker/bazarr
+  - /home/james/docker/gluetun
+  - /home/james/docker/jellyseerr
+  - /home/james/docker/prowlarr
+  - /home/james/docker/qbittorrent
+  - /home/james/docker/radarr
+  - /home/james/docker/sonarr
 
 backup_dirs:
   - /root

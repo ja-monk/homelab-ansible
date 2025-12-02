@@ -1,0 +1,4 @@
+- name: Reboot host
+  reboot:
+    reboot_timeout: 600     # allow 10 mins for boot, shouldnt be required
+    test_command: whoami    # test command to check host is back up

@@ -15,7 +15,7 @@
     - role: mount_omv
     - role: backup
 
-- hosts: all
+- hosts: "prox,pi"
   become: true
   roles:
     - update

@@ -17,5 +17,10 @@
     path: /mnt/omv-share
     src: "//192.168.1.250/omv-share"
     fstype: cifs
-    opts: "vers=3.0,credentials=/root/.omv_share_credentials,nofail,x-systemd.automount,_netdev,gid=1000,uid=1000"
+    opts: >-
+        {{
+          mount_opts | default(
+            "vers=3.0,credentials=/root/.omv_share_credentials,nofail,x-systemd.automount,_netdev,gid=1000,uid=1000"
+          )
+        }}
     state: mounted

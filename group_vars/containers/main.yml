@@ -1,0 +1,1 @@
+mount_opts: "vers=3.0,credentials=/root/.omv_share_credentials,nofail,auto,_netdev,gid=1000,uid=1000"

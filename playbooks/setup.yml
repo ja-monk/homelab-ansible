@@ -15,6 +15,9 @@
       name: "Install node"  # required for nvim LSPs
       when: ansible_distribution in ["Debian", "Ubuntu"]
 
+# TODO:
+      # clone config from git, stow
+      # git pull latest config
 
 # - hosts: media-box
 #   become: true

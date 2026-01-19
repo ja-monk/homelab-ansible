@@ -1,13 +1,24 @@
 ---
+# some hosts might not be started until after first two roles so do not gather facts
 - hosts: prox-server
   gather_facts: false
   roles:
     - role: start_prox_server
 
 - hosts: prox
-  gather_facts: false   # some hosts might not be started until after this
+  gather_facts: false
   roles:
     - role: start_prox
+
+# stop containers before backup to stop writes causing tar errors
+- hosts: pi
+  roles:
+    - role: find_containers
+      tags: 
+        - stop_docker
+        - start_docker
+    - role: stop_containers
+      tags: stop_docker
 
 - hosts: "prox,pi"
   become: true
@@ -15,12 +26,19 @@
     - role: mount_omv
     - role: backup
 
+# restart containers so `unless-stopped` containers start after reboot
+- hosts: pi
+  roles:
+    - role: start_containers
+      tags: start_docker
+
 - hosts: "prox,pi"
   become: true
   roles:
     - update
 
-- hosts: prox-server    # reboot prox host, proxmox handles restarting VMs/CTs
+# reboot prox host, proxmox handles restarting VMs/CTs
+- hosts: prox-server
   become: true
   roles:
     - reboot

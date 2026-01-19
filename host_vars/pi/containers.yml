@@ -1,0 +1,2 @@
+# root dir of docker containers to be managed by compose module
+docker_compose_root: "/home/james/docker"

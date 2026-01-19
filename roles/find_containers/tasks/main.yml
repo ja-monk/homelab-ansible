@@ -1,0 +1,21 @@
+# find all docker compose dirs at docker compose root
+- name: find compose files
+  ansible.builtin.find:
+    paths: "{{ docker_compose_root }}"
+    file_type: file
+    patterns: 
+      - "docker-compose.yml"
+    depth: 2
+    recurse: true
+    follow: true  # follow sym links
+  register: compose_files
+
+- name: get directories containing compose files
+  ansible.builtin.set_fact:
+    compose_dirs: >-
+      {{
+        compose_files.files 
+        | map(attribute='path') 
+        | map('dirname') 
+        | list
+      }}

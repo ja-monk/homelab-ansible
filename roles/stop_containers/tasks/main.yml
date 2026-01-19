@@ -1,0 +1,5 @@
+- name: Stop docker containers
+  community.docker.docker_compose_v2:
+    project_src: "{{ item }}"
+    state: stopped
+  loop: "{{ compose_dirs }}"

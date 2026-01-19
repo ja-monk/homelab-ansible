@@ -1,0 +1,11 @@
+- name: Start docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Start docker containers
+  community.docker.docker_compose_v2:
+    project_src: "{{ item }}"
+    state: present
+  loop: "{{ compose_dirs }}"
